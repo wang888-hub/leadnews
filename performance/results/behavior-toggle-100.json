@@ -1,0 +1,12 @@
+{
+  "scenario": "behavior-toggle",
+  "concurrency": 100,
+  "requests": 100,
+  "elapsedMs": 439,
+  "success": 8,
+  "http429": 92,
+  "http5xx": 0,
+  "post200": 4,
+  "delete200": 4,
+  "changed": 5
+}

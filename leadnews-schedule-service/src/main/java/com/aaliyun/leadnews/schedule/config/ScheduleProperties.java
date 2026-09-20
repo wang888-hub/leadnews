@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.schedule.config;import org.springframework.boot.context.properties.ConfigurationProperties;import java.time.Duration;@ConfigurationProperties("leadnews.schedule")public record ScheduleProperties(Duration preloadWindow,Duration scanInterval,Duration retryDelay,int maxRetries){}

@@ -1,0 +1,2 @@
+package com.aaliyun.leadnews.article.service;import com.xxl.job.core.handler.annotation.XxlJob;import org.springframework.stereotype.Component;
+@Component public class AiSummaryJobs{private final ArticleAiSummaryService summaries;public AiSummaryJobs(ArticleAiSummaryService s){summaries=s;}@XxlJob("aiSummaryRetryJob")public void retry(){summaries.recoverRunning();summaries.dispatch();}@XxlJob("aiSummaryBackfillJob")public void backfill(){summaries.backfillPage(1,20);}}

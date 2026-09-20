@@ -1,0 +1,33 @@
+{
+  "scenario": "search-sentinel",
+  "url": "http://localhost:51601/api/search/articles?keyword=stage15&page=1&size=10&sort=RELEVANCE",
+  "method": "GET",
+  "concurrency": 1,
+  "warmupSeconds": 30,
+  "configuredDurationSeconds": 60,
+  "configuredRequests": null,
+  "startedAt": "2026-09-10T12:26:48.232Z",
+  "elapsedSeconds": 60.01,
+  "requests": 4014,
+  "success": 300,
+  "http429": 3714,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 66.89,
+  "latencyMs": {
+    "p50": 15.33,
+    "p95": 29.11,
+    "p99": 34.24,
+    "max": 139.78
+  },
+  "successfulLatencyMs": {
+    "p50": 30.45,
+    "p95": 37.21,
+    "p99": 40.06,
+    "max": 139.78
+  },
+  "statuses": {
+    "200": 300,
+    "429": 3714
+  }
+}

@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.article.mapper;import com.aaliyun.leadnews.article.domain.ArticleSearchSync;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface ArticleSearchSyncMapper extends BaseMapper<ArticleSearchSync>{}

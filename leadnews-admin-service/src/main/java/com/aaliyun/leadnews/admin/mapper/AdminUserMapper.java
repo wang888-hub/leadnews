@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.admin.mapper;import com.aaliyun.leadnews.admin.domain.AdminUser;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface AdminUserMapper extends BaseMapper<AdminUser>{}

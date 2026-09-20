@@ -1,0 +1,8 @@
+package com.aaliyun.leadnews.wemedia.audit;
+import com.aaliyun.leadnews.wemedia.config.AuditResilienceProperties;import org.junit.jupiter.api.Test;import java.time.Duration;import java.util.concurrent.*;import static org.assertj.core.api.Assertions.*;
+class AuditAiGuardTest {
+ private AuditResilienceProperties p(int permits,int failures){return new AuditResilienceProperties(permits,Duration.ZERO,failures,Duration.ofMinutes(1),1,10,Duration.ofSeconds(1),Duration.ofSeconds(1),2);}
+ @Test void opensAfterConfiguredRemoteFailuresAndFastFails(){var g=new AuditAiGuard(p(4,2));for(int i=0;i<2;i++)assertThatThrownBy(()->g.call(()->{throw new RuntimeException("HTTP 503");})).isInstanceOf(RuntimeException.class);assertThat(g.state()).isEqualTo(AuditAiGuard.State.OPEN);assertThatThrownBy(()->g.call(()->"not-called")).isInstanceOf(AiAuditExceptions.CircuitOpen.class);}
+ @Test void fifthCallIsCapacityBusyNotCircuitFailure()throws Exception{var g=new AuditAiGuard(p(1,2));var entered=new CountDownLatch(1);var release=new CountDownLatch(1);Thread t=Thread.ofVirtual().start(()->g.call(()->{entered.countDown();try{release.await();}catch(InterruptedException e){Thread.currentThread().interrupt();}return "ok";}));entered.await();assertThatThrownBy(()->g.call(()->"x")).isInstanceOf(AiAuditExceptions.CapacityBusy.class);assertThat(g.state()).isEqualTo(AuditAiGuard.State.CLOSED);release.countDown();t.join();}
+ @Test void providerInvalidResponseIsClassifiedWithoutOpeningCircuit(){var g=new AuditAiGuard(p(1,1));assertThatThrownBy(()->g.call(()->{throw new RuntimeException("50210 structured output is invalid");})).isInstanceOf(AiAuditExceptions.InvalidResponse.class);assertThat(g.state()).isEqualTo(AuditAiGuard.State.CLOSED);}
+}

@@ -1,0 +1,61 @@
+server:
+  port: 51808
+
+spring:
+  ai:
+    dashscope:
+      api-key: ${API-KEY:}
+      chat:
+        options:
+          model: ${AI_MODEL:qwen3.8-max}
+          temperature: ${AI_TEMPERATURE:0.3}
+          max-tokens: ${AI_MAX_TOKENS:1024}
+          multi-model: true
+
+leadnews:
+  ai:
+    model: ${AI_MODEL:qwen3.8-max}
+    temperature: ${AI_TEMPERATURE:0.3}
+    max-tokens: ${AI_MAX_TOKENS:1024}
+    timeout: ${AI_TIMEOUT:PT30S}
+    stream-timeout: ${AI_STREAM_TIMEOUT:PT60S}
+    max-retries: ${AI_MAX_RETRIES:1}
+    retry-backoff: ${AI_RETRY_BACKOFF:PT0.2S}
+    max-concurrent-calls: ${AI_MAX_CONCURRENT_CALLS:4}
+    max-images: ${AI_MAX_IMAGES:1}
+    max-image-bytes: ${AI_MAX_IMAGE_BYTES:5242880}
+    allowed-image-hosts: ${AI_ALLOWED_IMAGE_HOSTS:localhost,127.0.0.1,minio}
+    audit:
+      max-images: ${AUDIT_AI_MAX_IMAGES:5}
+      max-text-length: ${AI_SAFE_TEXT_LIMIT:20000}
+      bucket: ${MINIO_BUCKET:leadnews}
+      trusted-prefixes: ${AUDIT_TRUSTED_MEDIA_PREFIXES:material/,article/}
+      max-source-image-bytes: ${AUDIT_MAX_SOURCE_IMAGE_BYTES:5242880}
+      max-audit-image-bytes: ${AUDIT_MAX_IMAGE_BYTES:524288}
+      max-total-image-bytes: ${AUDIT_MAX_TOTAL_IMAGE_BYTES:2097152}
+      max-request-bytes: ${AUDIT_MAX_REQUEST_BYTES:3145728}
+      max-edge: ${AUDIT_IMAGE_MAX_EDGE:1280}
+      jpeg-quality: ${AUDIT_IMAGE_JPEG_QUALITY:0.8}
+    business:
+      summary:
+        min-length: ${AI_SUMMARY_MIN_LENGTH:80}
+        max-length: ${AI_SUMMARY_MAX_LENGTH:160}
+        max-input-length: ${AI_SUMMARY_MAX_INPUT_LENGTH:20000}
+      continuation:
+        min-target-length: ${AI_CONTINUATION_MIN_TARGET_LENGTH:100}
+        max-target-length: ${AI_CONTINUATION_MAX_TARGET_LENGTH:1000}
+        max-input-length: ${AI_CONTINUATION_MAX_INPUT_LENGTH:20000}
+        max-instruction-length: ${AI_CONTINUATION_MAX_INSTRUCTION_LENGTH:500}
+    minio:
+      endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+      access-key: ${MINIO_ACCESS_KEY:leadnews}
+      secret-key: ${MINIO_SECRET_KEY:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never

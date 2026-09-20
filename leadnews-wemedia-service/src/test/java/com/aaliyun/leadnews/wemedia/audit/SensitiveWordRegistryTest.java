@@ -1,0 +1,3 @@
+package com.aaliyun.leadnews.wemedia.audit;
+import com.aaliyun.leadnews.wemedia.mapper.SensitiveWordMapper;import org.junit.jupiter.api.Test;import java.util.List;import static org.assertj.core.api.Assertions.*;import static org.mockito.Mockito.*;
+class SensitiveWordRegistryTest {@Test void buildsNewImmutableSnapshotAndOldReaderRemainsValid(){var mapper=mock(SensitiveWordMapper.class);when(mapper.enabledWords()).thenReturn(List.of("旧词"),List.of("新词"));var r=new SensitiveWordRegistry(mapper);r.reloadIfNewer(1);var old=r.snapshot();r.reloadIfNewer(2);assertThat(old.version()).isEqualTo(1);assertThat(old.matcher().match("旧词").matched()).isTrue();assertThat(r.snapshot().version()).isEqualTo(2);assertThat(r.snapshot().matcher().match("新词").matched()).isTrue();}}

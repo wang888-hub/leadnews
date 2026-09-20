@@ -1,0 +1,27 @@
+{
+  "scenario": "article-c1",
+  "url": "http://localhost:51601/api/article/13",
+  "method": "GET",
+  "concurrency": 1,
+  "warmupSeconds": 30,
+  "configuredDurationSeconds": 60,
+  "configuredRequests": null,
+  "startedAt": "2026-09-10T12:12:23.248Z",
+  "elapsedSeconds": 60.001,
+  "requests": 3977,
+  "success": 296,
+  "http429": 3681,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 66.28,
+  "latencyMs": {
+    "p50": 15.26,
+    "p95": 29.16,
+    "p99": 38.73,
+    "max": 180.19
+  },
+  "statuses": {
+    "200": 296,
+    "429": 3681
+  }
+}

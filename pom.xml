@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>3.5.16</version><relativePath/></parent>
+  <groupId>com.aaliyun.leadnews</groupId><artifactId>leadnews-ai-platform</artifactId><version>1.0.0-SNAPSHOT</version><packaging>pom</packaging>
+  <name>leadnews-ai-platform</name><description>AI-powered news microservice platform</description>
+  <modules>
+    <module>leadnews-common</module>
+    <module>leadnews-model</module>
+    <module>leadnews-feign-api</module>
+    <module>leadnews-gateway</module>
+    <module>leadnews-user-service</module>
+    <module>leadnews-article-service</module>
+    <module>leadnews-wemedia-service</module>
+    <module>leadnews-behavior-service</module>
+    <module>leadnews-search-service</module>
+    <module>leadnews-schedule-service</module>
+    <module>leadnews-admin-service</module>
+    <module>leadnews-ai-service</module>
+  </modules>
+  <properties>
+    <java.version>21</java.version><maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <spring-cloud.version>2025.0.3</spring-cloud.version><spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
+    <mybatis-plus.version>3.5.17</mybatis-plus.version><spring-ai.version>1.1.2</spring-ai.version>
+    <spring-ai-alibaba.version>1.1.2.2</spring-ai-alibaba.version><lombok.version>1.18.42</lombok.version>
+    <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
+    <maven.enforcer.plugin.version>3.6.2</maven.enforcer.plugin.version>
+    <jjwt.version>0.12.6</jjwt.version>
+    <minio.version>8.5.17</minio.version>
+    <xxl-job.version>3.4.2</xxl-job.version>
+    <elasticsearch-java.version>8.17.10</elasticsearch-java.version>
+  </properties>
+  <dependencyManagement><dependencies>
+    <dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-dependencies</artifactId><version>${spring-cloud.version}</version><type>pom</type><scope>import</scope></dependency>
+    <dependency><groupId>com.alibaba.cloud</groupId><artifactId>spring-cloud-alibaba-dependencies</artifactId><version>${spring-cloud-alibaba.version}</version><type>pom</type><scope>import</scope></dependency>
+    <dependency><groupId>org.springframework.ai</groupId><artifactId>spring-ai-bom</artifactId><version>${spring-ai.version}</version><type>pom</type><scope>import</scope></dependency>
+    <dependency><groupId>com.alibaba.cloud.ai</groupId><artifactId>spring-ai-alibaba-bom</artifactId><version>${spring-ai-alibaba.version}</version><type>pom</type><scope>import</scope></dependency>
+    <dependency><groupId>com.baomidou</groupId><artifactId>mybatis-plus-spring-boot3-starter</artifactId><version>${mybatis-plus.version}</version></dependency>
+    <dependency><groupId>com.baomidou</groupId><artifactId>mybatis-plus-jsqlparser</artifactId><version>${mybatis-plus.version}</version></dependency>
+    <dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><version>${lombok.version}</version></dependency>
+    <dependency><groupId>com.aaliyun.leadnews</groupId><artifactId>leadnews-common</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>com.aaliyun.leadnews</groupId><artifactId>leadnews-model</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>com.aaliyun.leadnews</groupId><artifactId>leadnews-feign-api</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>io.jsonwebtoken</groupId><artifactId>jjwt-api</artifactId><version>${jjwt.version}</version></dependency>
+    <dependency><groupId>io.jsonwebtoken</groupId><artifactId>jjwt-impl</artifactId><version>${jjwt.version}</version></dependency>
+    <dependency><groupId>io.jsonwebtoken</groupId><artifactId>jjwt-jackson</artifactId><version>${jjwt.version}</version></dependency>
+    <dependency><groupId>io.minio</groupId><artifactId>minio</artifactId><version>${minio.version}</version></dependency>
+    <dependency><groupId>com.xuxueli</groupId><artifactId>xxl-job-core</artifactId><version>${xxl-job.version}</version></dependency>
+    <dependency><groupId>co.elastic.clients</groupId><artifactId>elasticsearch-java</artifactId><version>${elasticsearch-java.version}</version></dependency>
+    <dependency><groupId>org.elasticsearch.client</groupId><artifactId>elasticsearch-rest-client</artifactId><version>${elasticsearch-java.version}</version></dependency>
+    <dependency><groupId>com.alibaba.cloud.ai</groupId><artifactId>spring-ai-alibaba-starter-dashscope</artifactId><version>${spring-ai-alibaba.version}</version></dependency>
+  </dependencies></dependencyManagement>
+  <dependencies>
+    <dependency><groupId>org.projectlombok</groupId><artifactId>lombok</artifactId><optional>true</optional></dependency>
+    <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope></dependency>
+  </dependencies>
+  <build>
+    <pluginManagement><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></pluginManagement>
+    <plugins>
+      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>${maven.compiler.plugin.version}</version><configuration><release>${maven.compiler.release}</release><encoding>${project.build.sourceEncoding}</encoding><parameters>true</parameters></configuration></plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId><artifactId>maven-enforcer-plugin</artifactId><version>${maven.enforcer.plugin.version}</version>
+        <executions><execution><id>enforce-build-environment</id><goals><goal>enforce</goal></goals><configuration><rules>
+          <requireJavaVersion><version>[21,22)</version><message>This project must be built with JDK 21.</message></requireJavaVersion>
+          <requireMavenVersion><version>[3.9,4.0)</version><message>Use the Maven Wrapper (Maven 3.9.x).</message></requireMavenVersion>
+        </rules></configuration></execution></executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

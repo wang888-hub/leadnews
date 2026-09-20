@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.article.mapper;import com.aaliyun.leadnews.article.domain.Channel;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface ChannelMapper extends BaseMapper<Channel>{}

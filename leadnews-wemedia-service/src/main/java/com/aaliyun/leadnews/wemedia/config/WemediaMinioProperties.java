@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.wemedia.config;import org.springframework.boot.context.properties.ConfigurationProperties;@ConfigurationProperties("leadnews.minio")public record WemediaMinioProperties(String endpoint,String publicEndpoint,String accessKey,String secretKey,String bucket,long maxImageSize,long maxImagePixels){}

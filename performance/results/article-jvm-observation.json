@@ -1,0 +1,32 @@
+{
+  "scenario": "article-jvm-observation",
+  "url": "http://localhost:51601/api/article/14",
+  "method": "GET",
+  "concurrency": 1,
+  "warmupSeconds": 0,
+  "configuredDurationSeconds": 60,
+  "configuredRequests": null,
+  "startedAt": "2026-09-10T12:52:42.841Z",
+  "elapsedSeconds": 60.191,
+  "requests": 198,
+  "success": 198,
+  "http429": 0,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 3.29,
+  "latencyMs": {
+    "p50": 44.58,
+    "p95": 53.22,
+    "p99": 71.9,
+    "max": 166.44
+  },
+  "successfulLatencyMs": {
+    "p50": 44.58,
+    "p95": 53.22,
+    "p99": 71.9,
+    "max": 166.44
+  },
+  "statuses": {
+    "200": 198
+  }
+}

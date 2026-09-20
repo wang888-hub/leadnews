@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: leadnews-behavior-service
+  profiles:
+    active: ${APP_ENV:dev}
+  config:
+    import:
+      - "optional:nacos:leadnews-common-dev.yml?group=LEADNEWS_GROUP&refreshEnabled=true"
+      - "optional:nacos:leadnews-behavior-service-dev.yml?group=LEADNEWS_GROUP&refreshEnabled=true"
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:}
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        group: LEADNEWS_GROUP
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        group: LEADNEWS_GROUP
+        file-extension: yml

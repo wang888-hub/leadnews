@@ -1,0 +1,14 @@
+package com.aaliyun.leadnews.wemedia.config;
+import com.aaliyun.leadnews.common.persistence.AuditMetaObjectHandler;
+import com.aaliyun.leadnews.common.security.JwtTokenService;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import org.springframework.beans.factory.annotation.Value;import org.springframework.context.annotation.*;import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;import org.springframework.boot.context.properties.EnableConfigurationProperties;
+@Configuration @EnableConfigurationProperties({AuditProperties.class,AuditResilienceProperties.class}) public class WemediaConfiguration {
+ @Bean JwtTokenService jwtTokenService(@Value("${JWT_SECRET}")String s){return new JwtTokenService(s);}
+ @Bean BCryptPasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+ @Bean AuditMetaObjectHandler auditMetaObjectHandler(){return new AuditMetaObjectHandler();}
+ @Bean MybatisPlusInterceptor mybatisPlusInterceptor(){MybatisPlusInterceptor i=new MybatisPlusInterceptor();i.addInnerInterceptor(new OptimisticLockerInnerInterceptor());i.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));return i;}
+}

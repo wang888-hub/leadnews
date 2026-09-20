@@ -1,0 +1,93 @@
+server:
+  port: 51802
+spring:
+  cloud:
+    sentinel:
+      enabled: true
+      eager: true
+      datasource:
+        article-hot-param:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+            username: ${NACOS_USERNAME:nacos}
+            password: ${NACOS_PASSWORD:nacos}
+            namespace: public
+            group-id: LEADNEWS_GROUP
+            data-id: leadnews-article-sentinel-param-flow.json
+            data-type: json
+            rule-type: param-flow
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3307}/leadnews_article?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  freemarker:
+    charset: UTF-8
+    template-loader-path: classpath:/templates/
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 30000
+    consumer:
+      group-id: leadnews-article-summary-v1
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.aaliyun.leadnews.model.ai
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2s
+
+leadnews:
+  ai:
+    summary:
+      enabled: ${AI_SUMMARY_ENABLED:true}
+      min-length: ${AI_SUMMARY_MIN_LENGTH:80}
+      max-length: ${AI_SUMMARY_MAX_LENGTH:160}
+      max-retries: ${AI_SUMMARY_MAX_RETRIES:3}
+      running-timeout: ${AI_SUMMARY_RUNNING_TIMEOUT:PT2M}
+      dispatch-interval-ms: ${AI_SUMMARY_DISPATCH_INTERVAL_MS:5000}
+      backfill-page-size: ${AI_SUMMARY_BACKFILL_PAGE_SIZE:20}
+  search-sync:
+    retry-delay-ms: ${SEARCH_SYNC_RETRY_DELAY_MS:5000}
+  minio:
+    endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+    public-endpoint: ${MINIO_PUBLIC_ENDPOINT:http://localhost:9000}
+    access-key: ${MINIO_ACCESS_KEY}
+    secret-key: ${MINIO_SECRET_KEY}
+    bucket: ${MINIO_BUCKET:leadnews}
+  publish:
+    max-retries: ${PUBLISH_MAX_RETRIES:3}
+    timeout: ${PUBLISH_TIMEOUT:PT5M}
+    cache-max-age-seconds: ${PUBLISH_CACHE_MAX_AGE:300}
+
+xxl:
+  job:
+    enabled: ${XXL_JOB_ENABLED:false}
+    admin-addresses: ${XXL_JOB_ADMIN_ADDRESSES:http://localhost:8088/xxl-job-admin}
+    access-token: ${XXL_JOB_ACCESS_TOKEN:}
+    executor:
+      appname: leadnews-article-publish
+      address: ${XXL_JOB_EXECUTOR_ADDRESS:}
+      port: ${XXL_JOB_EXECUTOR_PORT:9999}
+      log-path: ${XXL_JOB_EXECUTOR_LOG_PATH:./logs/xxl-job}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never

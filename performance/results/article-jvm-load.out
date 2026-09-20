@@ -1,0 +1,32 @@
+{
+  "scenario": "article-jvm-final",
+  "url": "http://localhost:51601/api/article/14",
+  "method": "GET",
+  "concurrency": 1,
+  "warmupSeconds": 0,
+  "configuredDurationSeconds": 60,
+  "configuredRequests": null,
+  "startedAt": "2026-09-10T12:56:10.884Z",
+  "elapsedSeconds": 60.003,
+  "requests": 203,
+  "success": 203,
+  "http429": 0,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 3.38,
+  "latencyMs": {
+    "p50": 38.75,
+    "p95": 47.98,
+    "p99": 69.14,
+    "max": 136.81
+  },
+  "successfulLatencyMs": {
+    "p50": 38.75,
+    "p95": 47.98,
+    "p99": 69.14,
+    "max": 136.81
+  },
+  "statuses": {
+    "200": 203
+  }
+}

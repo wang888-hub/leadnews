@@ -1,0 +1,2 @@
+package com.aaliyun.leadnews.wemedia.audit;import org.junit.jupiter.api.Test;import java.util.List;import static org.assertj.core.api.Assertions.*;
+class SensitiveWordMatcherTest {@Test void trieFindsDeduplicatedWordsAcrossText(){var m=new SensitiveWordMatcher(List.of("风险词","风险"));var r=m.match("标题风险词，正文再次风险词");assertThat(r.matched()).isTrue();assertThat(r.matchedWords()).containsExactly("风险");}@Test void cleanTextDoesNotMatch(){assertThat(new SensitiveWordMatcher(List.of("风险词")).match("普通技术文章").matched()).isFalse();}}

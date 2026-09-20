@@ -1,0 +1,3 @@
+package com.aaliyun.leadnews.behavior.web;
+import com.aaliyun.leadnews.behavior.service.BehaviorApplicationService;import com.aaliyun.leadnews.common.context.UserContext;import com.aaliyun.leadnews.common.exception.BusinessException;import com.aaliyun.leadnews.model.behavior.ArticleBehaviorView;import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/internal/behavior") public class InternalBehaviorController {private final BehaviorApplicationService service;public InternalBehaviorController(BehaviorApplicationService s){service=s;}@GetMapping("/articles/{id}")public ArticleBehaviorView detail(@PathVariable long id){if(!UserContext.isInternal())throw new BusinessException(40300,"Internal call required");return service.detail(id);}}

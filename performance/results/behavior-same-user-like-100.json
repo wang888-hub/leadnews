@@ -1,0 +1,33 @@
+{
+  "scenario": "behavior-same-user-like-100",
+  "url": "http://localhost:51601/api/behavior/articles/14/like",
+  "method": "POST",
+  "concurrency": 100,
+  "warmupSeconds": 0,
+  "configuredDurationSeconds": null,
+  "configuredRequests": 100,
+  "startedAt": "2026-09-10T12:19:58.726Z",
+  "elapsedSeconds": 0.416,
+  "requests": 100,
+  "success": 8,
+  "http429": 92,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 240.2,
+  "latencyMs": {
+    "p50": 297.16,
+    "p95": 317.66,
+    "p99": 325.55,
+    "max": 416.14
+  },
+  "successfulLatencyMs": {
+    "p50": 321.83,
+    "p95": 416.14,
+    "p99": 416.14,
+    "max": 416.14
+  },
+  "statuses": {
+    "200": 8,
+    "429": 92
+  }
+}

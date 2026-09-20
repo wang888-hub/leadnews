@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.schedule.mapper;import com.aaliyun.leadnews.schedule.domain.ScheduleTask;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface ScheduleTaskMapper extends BaseMapper<ScheduleTask>{}

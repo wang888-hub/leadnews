@@ -1,0 +1,7 @@
+jstat.exe : sun.jvmstat.monitor.MonitorException: Could not attach to 14440
+ËùÔÚÎ»ÖÃ D:\Toutiao\leadnews-ai-platform\performance\scripts\jvm-sample.ps1:11 ×Ö·û: 11
++     $gc=((& $jstat -gcutil $record.pid 2>$null | Select-Object -Last  ...
++           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (sun.jvmstat.mon...attach to 14440:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

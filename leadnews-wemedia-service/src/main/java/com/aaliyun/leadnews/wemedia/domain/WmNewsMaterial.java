@@ -1,0 +1,3 @@
+package com.aaliyun.leadnews.wemedia.domain;
+import com.baomidou.mybatisplus.annotation.*;
+@TableName("wm_news_material") public class WmNewsMaterial { @TableId(type=IdType.AUTO) private Long id; private Long materialId; private Long newsId; private String referenceType; private Integer ord; public Long getNewsId(){return newsId;}public Long getMaterialId(){return materialId;}public Integer getOrd(){return ord;} public void setMaterialId(Long v){materialId=v;} public void setNewsId(Long v){newsId=v;} public void setReferenceType(String v){referenceType=v;} public void setOrd(Integer v){ord=v;} }

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS hot_score_refresh_log (
+ id BIGINT PRIMARY KEY AUTO_INCREMENT, refresh_id VARCHAR(160) NOT NULL, article_id BIGINT NOT NULL,
+ status VARCHAR(20) NOT NULL DEFAULT 'PROCESSING', error_message VARCHAR(500),
+ created_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updated_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+ UNIQUE KEY uk_hot_refresh_id(refresh_id), KEY idx_hot_refresh_article(article_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

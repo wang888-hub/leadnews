@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.admin.mapper;import com.aaliyun.leadnews.admin.domain.AuditRecord;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface AuditRecordMapper extends BaseMapper<AuditRecord>{}

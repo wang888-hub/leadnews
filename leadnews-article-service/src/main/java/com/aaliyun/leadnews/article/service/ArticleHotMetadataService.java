@@ -1,0 +1,6 @@
+package com.aaliyun.leadnews.article.service;
+import com.aaliyun.leadnews.article.domain.Article;import com.aaliyun.leadnews.common.redis.BehaviorRedisKeys;import org.slf4j.*;import org.springframework.data.redis.core.StringRedisTemplate;import org.springframework.stereotype.Service;import java.time.ZoneId;import java.util.Map;
+@Service public class ArticleHotMetadataService {private static final Logger log=LoggerFactory.getLogger(ArticleHotMetadataService.class);private final StringRedisTemplate redis;public ArticleHotMetadataService(StringRedisTemplate r){redis=r;}
+ public void putBestEffort(Article a){try{redis.opsForHash().putAll(BehaviorRedisKeys.hotMeta(a.getId()),Map.of("channelId",String.valueOf(a.getChannelId()),"publishTimeEpoch",String.valueOf(a.getPublishedTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())));}catch(Exception e){log.warn("Hot metadata cache deferred to offline rebuild, articleId={}",a.getId(),e);}}
+ public void remove(long articleId,long channelId){redis.delete(BehaviorRedisKeys.hotMeta(articleId));redis.opsForZSet().remove(BehaviorRedisKeys.HOT_GLOBAL,String.valueOf(articleId));redis.opsForZSet().remove(BehaviorRedisKeys.hotChannel(channelId),String.valueOf(articleId));}
+}

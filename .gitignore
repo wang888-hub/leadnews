@@ -1,0 +1,17 @@
+target/
+logs/
+*.log
+.idea/
+*.iml
+.vscode/
+.env
+.mvn/repository/
+.mvn/shared-repository/
+.env.local
+frontend/node_modules/
+frontend/**/node_modules/
+frontend/**/dist/
+.stage14-runtime/
+.stage14-logs/
+# Archive files
+*.zip

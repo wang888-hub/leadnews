@@ -1,0 +1,5 @@
+[
+  {"apiName":"public-read-api","predicateItems":[{"pattern":"/api/article/**","matchStrategy":0},{"pattern":"/api/search/**","matchStrategy":0}]},
+  {"apiName":"write-api","predicateItems":[{"pattern":"/api/behavior/**","matchStrategy":0}]},
+  {"apiName":"ai-api","predicateItems":[{"pattern":"/api/wemedia/news/[^/]+/ai/continue","matchStrategy":2},{"pattern":"/api/ai/**","matchStrategy":0}]}
+]

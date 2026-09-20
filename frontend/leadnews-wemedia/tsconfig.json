@@ -1,0 +1,1 @@
+{"extends":"../leadnews-app/tsconfig.json","include":["src/**/*.ts","src/**/*.vue"]}

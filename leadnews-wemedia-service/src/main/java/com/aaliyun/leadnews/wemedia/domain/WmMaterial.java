@@ -1,0 +1,4 @@
+package com.aaliyun.leadnews.wemedia.domain;
+import com.aaliyun.leadnews.common.persistence.BaseEntity;
+import com.baomidou.mybatisplus.annotation.*;
+@TableName("wm_material") public class WmMaterial extends BaseEntity { @TableId(type=IdType.AUTO) private Long id; private Long userId; private String url; private String objectKey; private String materialType; private Boolean collected; public Long getId(){return id;} public Long getUserId(){return userId;}public void setUserId(Long v){userId=v;} public String getUrl(){return url;}public void setUrl(String v){url=v;} public String getObjectKey(){return objectKey;}public void setObjectKey(String v){objectKey=v;} public String getMaterialType(){return materialType;}public void setMaterialType(String v){materialType=v;} public Boolean getCollected(){return collected;}public void setCollected(Boolean v){collected=v;} }

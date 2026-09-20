@@ -1,0 +1,84 @@
+server:
+  port: 51601
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never
+
+spring:
+  cloud:
+    sentinel:
+      enabled: true
+      eager: true
+      filter:
+        enabled: false
+      datasource:
+        gateway-flow:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+            username: ${NACOS_USERNAME:nacos}
+            password: ${NACOS_PASSWORD:nacos}
+            namespace: public
+            group-id: LEADNEWS_GROUP
+            data-id: leadnews-gateway-sentinel-gw-flow.json
+            data-type: json
+            rule-type: gw-flow
+        gateway-api-group:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+            username: ${NACOS_USERNAME:nacos}
+            password: ${NACOS_PASSWORD:nacos}
+            namespace: public
+            group-id: LEADNEWS_GROUP
+            data-id: leadnews-gateway-sentinel-api-group.json
+            data-type: json
+            rule-type: gw-api-group
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-service
+              uri: lb://leadnews-user-service
+              predicates: [Path=/api/user/**]
+            - id: article-service
+              uri: lb://leadnews-article-service
+              predicates: [Path=/api/article/**]
+            - id: article-static
+              uri: lb://leadnews-article-service
+              predicates: [Path=/static/article/**]
+            - id: wemedia-service
+              uri: lb://leadnews-wemedia-service
+              predicates: [Path=/api/wemedia/**]
+            - id: behavior-service
+              uri: lb://leadnews-behavior-service
+              predicates: [Path=/api/behavior/**]
+            - id: search-service
+              uri: lb://leadnews-search-service
+              predicates: [Path=/api/search/**]
+            - id: admin-service
+              uri: lb://leadnews-admin-service
+              predicates: [Path=/api/admin/**]
+            - id: ai-service
+              uri: lb://leadnews-ai-service
+              predicates: [Path=/api/ai/**]
+
+leadnews:
+  gateway:
+    security:
+      jwt-secret: ${JWT_SECRET}
+      whitelist:
+        - /api/user/login
+        - /api/user/register
+        - /api/wemedia/login
+        - /api/admin/login
+        - /actuator/health
+        - /static/article/**
+        - /api/article/**
+        - /api/search/articles
+        - /api/search/suggestions
+        - /api/article/hot

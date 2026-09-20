@@ -1,0 +1,2 @@
+export const newsStatus:Record<string,{label:string;tone:string}>={DRAFT:{label:'草稿',tone:'info'},SUBMITTED:{label:'已提交',tone:'warning'},AUDITING:{label:'AI 审核中',tone:'warning'},MANUAL_REVIEW:{label:'待人工审核',tone:'danger'},APPROVED:{label:'审核通过',tone:'success'},REJECTED:{label:'审核拒绝',tone:'danger'},WAITING:{label:'待定时发布',tone:'warning'},PUBLISHING:{label:'发布中',tone:'warning'},PUBLISHED:{label:'已发布',tone:'success'},PUBLISH_FAILED:{label:'发布失败',tone:'danger'}}
+export const statusLabel=(status:string)=>newsStatus[status]?.label||status

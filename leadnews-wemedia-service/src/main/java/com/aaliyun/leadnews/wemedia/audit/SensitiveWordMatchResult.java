@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.wemedia.audit;import java.util.List;public record SensitiveWordMatchResult(boolean matched,List<String> matchedWords) {public static SensitiveWordMatchResult none(){return new SensitiveWordMatchResult(false,List.of());}}

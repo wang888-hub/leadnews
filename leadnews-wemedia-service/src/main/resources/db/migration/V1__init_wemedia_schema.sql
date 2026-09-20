@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS wm_user (
+  id BIGINT NOT NULL AUTO_INCREMENT, ap_user_id BIGINT NULL, name VARCHAR(64) NOT NULL, password_hash VARCHAR(100) NOT NULL,
+  nickname VARCHAR(64) NOT NULL, image VARCHAR(500) NULL, location VARCHAR(128) NULL, phone VARCHAR(20) NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE', email VARCHAR(128) NULL, account_type VARCHAR(20) NOT NULL DEFAULT 'PERSONAL', score INT NOT NULL DEFAULT 0,
+  login_time DATETIME(3) NULL, created_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updated_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  version INT NOT NULL DEFAULT 0, deleted TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY(id), UNIQUE KEY uk_wm_user_name(name), UNIQUE KEY uk_wm_user_ap(ap_user_id), UNIQUE KEY uk_wm_user_phone(phone)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE IF NOT EXISTS wm_news (
+  id BIGINT NOT NULL AUTO_INCREMENT, user_id BIGINT NOT NULL, title VARCHAR(128) NOT NULL, content JSON NOT NULL,
+  layout TINYINT NOT NULL DEFAULT 0, channel_id BIGINT NOT NULL, labels VARCHAR(255) NULL, cover_images JSON NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'DRAFT', submitted_time DATETIME(3) NULL, publish_time DATETIME(3) NULL,
+  reason VARCHAR(500) NULL, article_id BIGINT NULL,
+  created_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updated_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  version INT NOT NULL DEFAULT 0, deleted TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY(id), KEY idx_wm_news_owner_status(user_id,status), KEY idx_wm_news_audit(status,submitted_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE IF NOT EXISTS wm_material (
+  id BIGINT NOT NULL AUTO_INCREMENT, user_id BIGINT NOT NULL, url VARCHAR(500) NULL, object_key VARCHAR(500) NULL,
+  material_type VARCHAR(20) NOT NULL DEFAULT 'IMAGE', collected TINYINT(1) NOT NULL DEFAULT 0,
+  created_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updated_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  version INT NOT NULL DEFAULT 0, deleted TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY(id), KEY idx_material_owner(user_id,created_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE IF NOT EXISTS wm_news_material (
+  id BIGINT NOT NULL AUTO_INCREMENT, material_id BIGINT NOT NULL, news_id BIGINT NOT NULL,
+  reference_type VARCHAR(20) NOT NULL, ord INT NOT NULL DEFAULT 0, created_time DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY(id), UNIQUE KEY uk_news_material(news_id,material_id,reference_type), KEY idx_material_news(material_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO wm_user(ap_user_id,name,password_hash,nickname,phone) VALUES
+(1,'wemedia_demo','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','演示自媒体','13900000000')
+ON DUPLICATE KEY UPDATE nickname=VALUES(nickname);

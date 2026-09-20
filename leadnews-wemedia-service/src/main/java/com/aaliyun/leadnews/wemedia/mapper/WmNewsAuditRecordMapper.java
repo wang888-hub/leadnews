@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.wemedia.mapper;import com.aaliyun.leadnews.wemedia.domain.WmNewsAuditRecord;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface WmNewsAuditRecordMapper extends BaseMapper<WmNewsAuditRecord>{}

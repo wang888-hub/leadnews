@@ -1,0 +1,36 @@
+{
+  "scenario": "sse",
+  "concurrency": 4,
+  "success": 1,
+  "http429": 3,
+  "results": [
+    {
+      "http": 429,
+      "chunks": 0,
+      "done": 0,
+      "firstTokenMs": null,
+      "totalMs": 18
+    },
+    {
+      "http": 200,
+      "chunks": 33,
+      "done": 1,
+      "firstTokenMs": 579,
+      "totalMs": 2767
+    },
+    {
+      "http": 429,
+      "chunks": 0,
+      "done": 0,
+      "firstTokenMs": null,
+      "totalMs": 17
+    },
+    {
+      "http": 429,
+      "chunks": 0,
+      "done": 0,
+      "firstTokenMs": null,
+      "totalMs": 18
+    }
+  ]
+}

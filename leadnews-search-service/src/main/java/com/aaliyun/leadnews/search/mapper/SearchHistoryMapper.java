@@ -1,0 +1,1 @@
+package com.aaliyun.leadnews.search.mapper;import com.aaliyun.leadnews.search.domain.SearchHistory;import com.baomidou.mybatisplus.core.mapper.BaseMapper;public interface SearchHistoryMapper extends BaseMapper<SearchHistory>{}

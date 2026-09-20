@@ -1,0 +1,1 @@
+{"name":"leadnews-frontend","private":true,"packageManager":"pnpm@11.19.0","scripts":{"typecheck":"pnpm -r typecheck","test":"pnpm --filter @leadnews/shared test","build":"pnpm -r build"},"devDependencies":{"esbuild":"0.27.7","typescript":"5.9.3","vitest":"3.2.4"}}

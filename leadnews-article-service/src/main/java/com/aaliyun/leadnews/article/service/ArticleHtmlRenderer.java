@@ -1,0 +1,3 @@
+package com.aaliyun.leadnews.article.service;
+import com.aaliyun.leadnews.article.domain.Article;import com.aaliyun.leadnews.model.foundation.ArticleContentItemDTO;import freemarker.template.Configuration;import org.springframework.stereotype.Component;import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;import java.util.*;
+@Component public class ArticleHtmlRenderer{private final Configuration templates;public ArticleHtmlRenderer(Configuration c){templates=c;}public String render(Article a,List<ArticleContentItemDTO> content){try{return FreeMarkerTemplateUtils.processTemplateIntoString(templates.getTemplate("article.ftl"),Map.of("article",a,"content",content));}catch(Exception e){throw new IllegalStateException("Article HTML rendering failed",e);}}}

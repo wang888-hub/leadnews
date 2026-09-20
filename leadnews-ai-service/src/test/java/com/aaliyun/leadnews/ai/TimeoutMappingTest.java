@@ -1,0 +1,4 @@
+package com.aaliyun.leadnews.ai;import com.aaliyun.leadnews.ai.exception.AiExceptions;import com.aaliyun.leadnews.ai.support.AiCallExecutor;import org.junit.jupiter.api.Test;import java.time.Duration;import static org.assertj.core.api.Assertions.*;
+class TimeoutMappingTest {@Test void mapsTimeout(){try(var x=new AiCallExecutor(TestFixtures.properties(Duration.ofMillis(20),0,1))){assertThatThrownBy(()->x.execute(()->{try{Thread.sleep(200);}catch(InterruptedException ignored){}return "late";})).isInstanceOf(AiExceptions.Timeout.class);}}
+ @Test void timeoutRetriesOnlyConfiguredOnce(){var attempts=new java.util.concurrent.atomic.AtomicInteger();try(var x=new AiCallExecutor(TestFixtures.properties(Duration.ofMillis(20),1,1))){assertThatThrownBy(()->x.execute(()->{attempts.incrementAndGet();try{Thread.sleep(200);}catch(InterruptedException ignored){}return "late";})).isInstanceOf(AiExceptions.Timeout.class);assertThat(attempts).hasValue(2);}}
+}

@@ -1,0 +1,3 @@
+<script setup lang="ts">import {useAuthStore} from '@leadnews/shared';import {useRouter} from 'vue-router';const auth=useAuthStore(),router=useRouter();const logout=()=>{auth.logout();router.push('/')}</script>
+<template><div class="shell"><header class="topbar"><RouterLink class="brand" to="/">云上<b>头条</b></RouterLink><nav class="nav"><RouterLink to="/">首页</RouterLink><RouterLink to="/search">搜索</RouterLink></nav><span v-if="auth.isAuthenticated">{{auth.user?.name||'已登录'}} · <button class="link-btn" @click="logout">退出</button></span><RouterLink v-else to="/login">登录</RouterLink></header><RouterView/></div></template>
+<style scoped>.link-btn{background:none;border:0;color:#f6bd62;cursor:pointer}</style>

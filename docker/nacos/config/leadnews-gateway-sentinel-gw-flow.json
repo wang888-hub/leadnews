@@ -1,0 +1,13 @@
+[
+  {"resource":"user-service","resourceMode":0,"grade":1,"count":20,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"article-service","resourceMode":0,"grade":1,"count":20,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"article-static","resourceMode":0,"grade":1,"count":30,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"wemedia-service","resourceMode":0,"grade":1,"count":10,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"behavior-service","resourceMode":0,"grade":1,"count":8,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"search-service","resourceMode":0,"grade":1,"count":5,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"admin-service","resourceMode":0,"grade":1,"count":5,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"ai-service","resourceMode":0,"grade":1,"count":2,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"public-read-api","resourceMode":1,"grade":1,"count":15,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"write-api","resourceMode":1,"grade":1,"count":8,"intervalSec":1,"controlBehavior":0,"burst":0},
+  {"resource":"ai-api","resourceMode":1,"grade":1,"count":1,"intervalSec":1,"controlBehavior":0,"burst":0}
+]

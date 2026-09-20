@@ -1,0 +1,25 @@
+name: leadnews-frontend-production-check
+
+services:
+  nginx:
+    image: nginx:1.28.0-alpine
+    container_name: leadnews-frontend-nginx
+    restart: "no"
+    ports:
+      - "18080:80"
+      - "18081:81"
+      - "18082:82"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/leadnews-spa.inc:/etc/nginx/conf.d/leadnews-spa.inc:ro
+      - ./frontend/leadnews-app/dist:/srv/leadnews-app:ro
+      - ./frontend/leadnews-wemedia/dist:/srv/leadnews-wemedia:ro
+      - ./frontend/leadnews-admin/dist:/srv/leadnews-admin:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/ && wget -q --spider http://127.0.0.1:81/ && wget -q --spider http://127.0.0.1:82/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s

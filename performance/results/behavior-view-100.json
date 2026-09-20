@@ -1,0 +1,33 @@
+{
+  "scenario": "behavior-view-100",
+  "url": "http://localhost:51601/api/behavior/articles/14/view",
+  "method": "POST",
+  "concurrency": 100,
+  "warmupSeconds": 0,
+  "configuredDurationSeconds": null,
+  "configuredRequests": 100,
+  "startedAt": "2026-09-10T12:22:04.889Z",
+  "elapsedSeconds": 0.371,
+  "requests": 100,
+  "success": 8,
+  "http429": 92,
+  "http5xx": 0,
+  "connectionErrors": 0,
+  "rps": 269.65,
+  "latencyMs": {
+    "p50": 236.19,
+    "p95": 239.7,
+    "p99": 241.95,
+    "max": 328.96
+  },
+  "successfulLatencyMs": {
+    "p50": 236.36,
+    "p95": 328.96,
+    "p99": 328.96,
+    "max": 328.96
+  },
+  "statuses": {
+    "200": 8,
+    "429": 92
+  }
+}
