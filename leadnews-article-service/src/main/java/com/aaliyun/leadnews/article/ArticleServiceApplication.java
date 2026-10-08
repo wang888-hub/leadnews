@@ -8,12 +8,13 @@ import com.aaliyun.leadnews.feign.user.UserFeignClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import com.aaliyun.leadnews.article.config.AiSummaryProperties;
+import com.aaliyun.leadnews.article.config.SearchSyncProperties;
 
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.aaliyun.leadnews.feign")
 @MapperScan("com.aaliyun.leadnews.article.mapper")
 @EnableScheduling
-@EnableConfigurationProperties(AiSummaryProperties.class)
+@EnableConfigurationProperties({AiSummaryProperties.class,SearchSyncProperties.class})
 public class ArticleServiceApplication {
 
     public static void main(String[] args) {

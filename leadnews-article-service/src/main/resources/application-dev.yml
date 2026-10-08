@@ -61,6 +61,10 @@ leadnews:
       backfill-page-size: ${AI_SUMMARY_BACKFILL_PAGE_SIZE:20}
   search-sync:
     retry-delay-ms: ${SEARCH_SYNC_RETRY_DELAY_MS:5000}
+    max-retries: ${SEARCH_SYNC_MAX_RETRIES:10}
+    claim-timeout: ${SEARCH_SYNC_CLAIM_TIMEOUT:PT5M}
+    batch-size: ${SEARCH_SYNC_BATCH_SIZE:100}
+    topic: ${ARTICLE_SEARCH_TOPIC:leadnews.article.search}
   minio:
     endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
     public-endpoint: ${MINIO_PUBLIC_ENDPOINT:http://localhost:9000}

@@ -18,17 +18,20 @@ public class InternalArticleController implements ArticleInternalClient {
  private final ChannelService channels;
  private final HotArticleQueryService hot;
  private final ArticleAiSummaryService summaries;
+ private final ArticleSearchStateService searchState;
 
  public InternalArticleController(ArticleApplicationService a,
                                   ArticlePublishService p,
                                   ChannelService c,
                                   HotArticleQueryService h,
-                                  ArticleAiSummaryService s) {
+                                  ArticleAiSummaryService s,
+                                  ArticleSearchStateService searchState) {
   articles = a;
   publisher = p;
   channels = c;
   hot = h;
   summaries = s;
+  this.searchState = searchState;
  }
 
  @Override
@@ -118,5 +121,20 @@ public class InternalArticleController implements ArticleInternalClient {
  @PostMapping("/{id}/summary/retry")
  public ArticleAiSummaryService.SummaryRetryResult retrySummary(@PathVariable Long id) {
   return summaries.retryFailed(id);
+ }
+
+ @PostMapping("/{id}/unpublish")
+ public Map<String, Long> unpublish(@PathVariable Long id) {
+  return Map.of("articleVersion", searchState.unpublish(id));
+ }
+
+ @PostMapping("/{id}/republish")
+ public Map<String, Long> republish(@PathVariable Long id) {
+  return Map.of("articleVersion", searchState.republish(id));
+ }
+
+ @DeleteMapping("/{id}")
+ public Map<String, Long> deleteArticle(@PathVariable Long id) {
+  return Map.of("articleVersion", searchState.delete(id));
  }
 }

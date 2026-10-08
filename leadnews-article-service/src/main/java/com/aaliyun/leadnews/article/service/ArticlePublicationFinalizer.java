@@ -30,12 +30,15 @@ public class ArticlePublicationFinalizer {
                 .set(Article::getPublishStatus, "PUBLISHED")
                 .set(Article::getStatus, "PUBLISHED")
                 .set(Article::getPublishedTime, done)
-                .set(Article::getLastError, null));
+                .set(Article::getLastError, null)
+                .setSql("search_version = search_version + 1"));
 
         if (n != 1) {
             throw new IllegalStateException("Publish completion CAS failed");
         }
 
-        outbox.enqueue(id, ArticleSearchEvent.EventType.UPSERT);
+        Article published=articles.selectById(id);
+        if(published==null)throw new IllegalStateException("Published article disappeared");
+        outbox.enqueue(id, published.getSearchVersion(), ArticleSearchEvent.EventType.UPSERT);
     }
 }

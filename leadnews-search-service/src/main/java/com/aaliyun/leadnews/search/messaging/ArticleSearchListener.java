@@ -26,13 +26,15 @@ public class ArticleSearchListener {
          groupId = "leadnews-search-indexer")
  public void consume(ArticleSearchEvent event) throws Exception {
   if (event.eventType() == ArticleSearchEvent.EventType.DELETE) {
-   index.delete(event.articleId());
+   index.tombstone(event.articleId(),event.articleVersion());
    return;
   }
   try {
-   index.upsert(articles.searchDocument(event.articleId()));
+   ArticleSearchDocument document=articles.searchDocument(event.articleId());
+   if(document.articleVersion()<event.articleVersion())throw new IllegalStateException("Article projection is older than search event");
+   if(document.articleVersion()==event.articleVersion())index.upsert(document);
   } catch (FeignException.NotFound e) {
-   index.delete(event.articleId());
+   index.tombstone(event.articleId(),event.articleVersion());
   }
  }
 

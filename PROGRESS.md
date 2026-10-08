@@ -719,3 +719,18 @@ leadnews-ai-platform
 - 补充真实 ImageIO 缩放压缩测试后，JDK 21 复跑 AI 模块及依赖测试退出码 0；AI 测试数增至 16，验证 2000x1000 PNG 生成 1280x640、≤512KB 的审核 JPEG 且原始字节未被修改。
 - 对同一审核可靠性需求做第二轮差异复核：修复 `AiCallExecutor` timeout 分支未遵守 maxRetries 的缺口，现在 timeout/连接/适合重试的 5xx 均为首次加最多一次；新增测试确认 timeout 最多执行 2 次。上传端增加默认 2000 万像素头部校验，写 MinIO 前拒绝尺寸异常或无法验证的图片；审核拉取层新增超过 5 张时不触碰 MinIO 的防御测试。
 - 最终使用 Temurin JDK 21.0.12.1 执行 `mvnw.cmd -q clean verify`，退出码 0；Wemedia 39 项、AI 18 项测试均为 0 failure/0 error。九个项目 Java 服务按 PID 脚本恢复后全部 UP，Nacos 九服务注册正常；Docker 未操作，原项目 Git clean，安全扫描无旧 VM IP、原项目路径或 API Key 形态。
+
+### 搜索一致性最小增强（2026-09-26）
+
+- 保持 `MySQL Article → Search Outbox → Kafka → Search Service → Elasticsearch` 原链路，不新增 Inbox、Retry Topic、Redis 队列或分布式事务框架。Article 增加唯一搜索业务版本 `search_version`，事件与 ES 文档同步携带 articleVersion。
+- 发布、下架、删除、重新上架及 AI 摘要成功均通过 MySQL 本地事务同时递增搜索版本和写 Outbox；新增内部下架/重新上架/删除入口。Outbox 状态机调整为 PENDING/PROCESSING/SENT/DEAD，数据库 CAS Claim、5 分钟可配置 Lease、指数退避和显式 DEAD 已实现。
+- Elasticsearch 写入使用 `version_type=external`；409 作为 stale/duplicate 正常 ACK。DELETE 改为带版本 Tombstone，文章与联想查询都过滤 `deleted=false`。高亮、match_phrase_prefix 联想、前端 debounce/cancel 和 MySQL 搜索历史均未改写。
+- 灾难恢复入口仍为 `POST /internal/search/rebuild`，分页读取 MySQL PUBLISHED 文章并 Bulk 重建，先清除 alias 内幽灵文档；当前未实现完整蓝绿索引校验/原子双 alias 切换，需在维护窗口执行。
+- 新增 Flyway V6，包含 search_version、outbox article_version/claimed_at、历史状态/版本回填和调度索引。Article 新增 7 项、Search 新增 5 项一致性契约测试均通过；其中明确验证 ES 409 被视为正常幂等结果、503 继续抛给 Kafka 错误处理器。使用 Temurin JDK 21.0.12.1 与 Maven Wrapper 3.9.10 执行全量 `clean verify`，13/13 Reactor 模块 `BUILD SUCCESS`（2026-09-26 17:53，总计 3 分 01 秒），追加 Search 聚焦测试退出码 0。真实 Docker 中本轮仅发现其他项目的两个容器，LeadNews Elasticsearch/Kafka 未运行，因此未执行真实跨进程故障演练，也未应用实库 V6 或执行上线后 rebuild；这些是部署验收项，不伪称已验证。
+
+### 定时发布并发执行增强（2026-10-08）
+
+- 保留 MySQL `schedule_task`、Redis ZSet、Schedule Service 和 Article 发布链路；未改成每篇文章注册 XXL-Job。ZSet 扫描改为只取已经到期任务，单批最多 100 条，不再反复取未来 30 秒任务。
+- 扫描线程只负责原子移除 ZSet member 并提交有界线程池；默认 core=4、max=8、queue=200。任务执行仍通过 MySQL CAS 从 WAITING/READY/FAILED 领取为 RUNNING，支持多线程与多实例，单篇失败独立回退/重试，不影响其他文章。
+- 线程池拒绝时任务立即回到 ZSet；每分钟从 MySQL 分页对账未来一分钟任务；服务启动分页恢复全部任务；RUNNING 超过 5 分钟恢复为 WAITING，覆盖“ZSet 删除后进程崩溃”和工作线程意外异常场景。
+- 新增 Schedule 专项测试：有限批量扫描、移除竞争只有赢家提交、线程池拒绝回队列、第一篇发布失败后第二篇仍继续，3 项测试全部通过。使用 Temurin JDK 21.0.12.1 与 Maven Wrapper 3.9.10 执行全量 `clean verify`，13/13 Reactor 模块 `BUILD SUCCESS`（2026-10-08 20:07，总计 3 分 33 秒）。本轮未启动或重启 Java 服务，运行环境需在下次启动 Schedule Service 后加载新线程池配置。

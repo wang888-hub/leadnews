@@ -17,10 +17,15 @@ spring:
 
 leadnews:
   schedule:
-    preload-window: ${SCHEDULE_PRELOAD_WINDOW:PT30S}
     scan-interval: ${SCHEDULE_SCAN_INTERVAL:PT1S}
+    reconcile-interval: ${SCHEDULE_RECONCILE_INTERVAL:PT1M}
     retry-delay: ${SCHEDULE_RETRY_DELAY:PT10S}
+    running-timeout: ${SCHEDULE_RUNNING_TIMEOUT:PT5M}
     max-retries: ${SCHEDULE_MAX_RETRIES:3}
+    scan-batch-size: ${SCHEDULE_SCAN_BATCH_SIZE:100}
+    worker-core-size: ${SCHEDULE_WORKER_CORE_SIZE:4}
+    worker-max-size: ${SCHEDULE_WORKER_MAX_SIZE:8}
+    worker-queue-capacity: ${SCHEDULE_WORKER_QUEUE_CAPACITY:200}
 
 management:
   endpoints:
